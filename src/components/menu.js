@@ -1,14 +1,14 @@
 import React from "react";
 import './menu.css';
 import Button from './button'
-import Logo from '../logotipo.png'
+import Logo from './logotipo.png'
+import Consulta from './Consulta/consulta'
 
 function changeSelected(e) {
     var oldSelected = document.getElementsByClassName('btnMenuSelected')[0];
     oldSelected.classList.remove('btnMenuSelected')
     var btnSelected = document.getElementById(e.target.id)
     btnSelected.classList.add('btnMenuSelected')
-
 }
 
 function Menu(props) {

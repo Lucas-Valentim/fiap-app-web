@@ -39,9 +39,16 @@
     margin: 0;
     border: 0;
     font-size: 17px;
+    font-weight: bold;
+    text-align: center;
+    align-items: center;
+    align-self: center;
+    align-content: center;
+    text-decoration: none
 }
 
 .Selected {
     color: #FBFBFB !important;
     background-color: #dd0000 !important;
+    
 }
