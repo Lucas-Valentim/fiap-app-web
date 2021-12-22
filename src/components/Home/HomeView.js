@@ -9,10 +9,13 @@ import { Navbar, Container, Nav, NavDropdown, Form, Offcanvas, FormControl } fro
 import {Link, useHistory } from 'react-router-dom'
 
 function changeSelected(e) {
-  var oldSelected = document.getElementsByClassName('btnMenuSelected')[0];
-  oldSelected.classList.remove('btnMenuSelected')
+  var oldSelected = document.getElementsByClassName('Selected')[0];
+  oldSelected.classList.remove('Selected')
   var btnSelected = document.getElementById(e.target.id)
-  btnSelected.classList.add('btnMenuSelected')
+  btnSelected.classList.add('Selected')
+
+  var offcanvas = document.getElementsByClassName('btn-close')[0];
+  offcanvas.click()
 }
 function HomeView() {
 
@@ -33,8 +36,8 @@ function HomeView() {
       <Offcanvas.Body>
               <Nav className="justify-content-end pe-3">
                 <img src={Logo} className='logo' alt='Logo'></img>
-                <Link to="/consulta" Id='btnConsultar' type="Button" className="btnMenuSelected" class="btnMenu Selected" onClick={ e => changeSelected(e)}>Consultar</Link>   
-                <Link to="/cadastro" Id='btnCadastrar' type="Button" className="btnMenuSelected" class="btnMenu" onClick={ e => changeSelected(e)}>Cadastrar</Link>   
+                <Link to="/consulta" Id='btnConsultar' type="Button" class="btnMenu Selected" onClick={ e => changeSelected(e)}>Consultar</Link>   
+                <Link to="/cadastro" Id='btnCadastrar' type="Button" class="btnMenu" onClick={ e => changeSelected(e)}>Cadastrar</Link>   
               </Nav>
       </Offcanvas.Body>
     </Navbar.Offcanvas>
@@ -43,7 +46,7 @@ function HomeView() {
       {/* <Menu></Menu> */}
       <div className='container-fluid'>
         <header className='row justify-content-end align-items-center'>
-          <label className='col-md-11 col-9 text-right'>Nome do usuário</label>
+          <label className='col-md-11 col-9 text-right'>Aptent litora orci</label>
           <img src={Profile} id='imgProfile' className='col-md-1 col-3 text-left' alt='Foto usuário'></img>
         </header>
      

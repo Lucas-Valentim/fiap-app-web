@@ -28,7 +28,7 @@ function App() {
       <Offcanvas.Body>
               <Nav className="justify-content-end pe-3">
                 <img src={Logo} className='logo' alt='Logo'></img>
-          <Button className='' Class='btnMenu Selected' Id='btnConsultar' Text='Consultar'></Button>
+                <Button Class='btnMenu Selected' Id='btnConsultar' Text='Consultar'></Button>
                 <Button Class='btnMenu' Id='btnCadastrar' Text='Cadastrar'></Button>
         </Nav>
       </Offcanvas.Body>
@@ -38,7 +38,7 @@ function App() {
       {/* <Menu></Menu> */}
       <div className='container-fluid'>
         <header className='row justify-content-end align-items-center'>
-          <label className='col-md-11 col-9 text-right'>Nome do usuário</label>
+          <label className='col-md-11 col-9 text-right'>Nicolas Alexandre Benjamin Lopes</label>
           <img src={Profile} id='imgProfile' className='col-md-1 col-3 text-left' alt='Foto usuário'></img>
         </header>
           <Consulta></Consulta>

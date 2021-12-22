@@ -9,6 +9,7 @@
     align-content: center;
     cursor: pointer;
     transition: ease-in-out .2s;
+    text-decoration: none;
 }
 
 .btnMenu:first-of-type {
@@ -32,7 +33,7 @@
 }
 
 .btnMenu {
-    color: black;
+    color: black !important;
     background-color: #dd000010;
     width: 100%;
     padding: 25px;
@@ -50,5 +51,4 @@
 .Selected {
     color: #FBFBFB !important;
     background-color: #dd0000 !important;
-    
 }

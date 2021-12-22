@@ -10,80 +10,88 @@ function Content() {
             <div className="row text-left">
                 <h1 id='Title' className="col-sm">Cadastro</h1>
             </div>
-            <form class="container text-left">
+            <Form className="container text-left">
                <Row className="mb-3">
-                    <div class="col-md-4">
-                        <label for="inputMarca" class="form-label">Marca</label>
-                        <select id="inputMarca" class="form-select">
-                                <option>Selecione</option>
-                                <option>Marca 1</option>
-                                <option>Marca 2</option>
-                                <option>Marca 3</option>
-                        </select>
-                    </div>
+                     <Form.Group controlId="formGridMarca" className="col-md-4 mb-3">
+                        <Form.Label>Marca</Form.Label>
+                        <Form.Select defaultValue='Selecione'>
+                            <option>Selecione</option>
+                            <option>Marca 1</option>
+                            <option>Marca 2</option>
+                            <option>Marca 3</option>
+                        </Form.Select>
+                    </Form.Group>
 
-                    <div class="col-md-4">
-                        <label for="inputModelo" class="form-label">Modelo</label>
-                        <select id="inputModelo" class="form-select">
+                    <Form.Group controlId="formGridModelo" className="col-md-4 mb-3">
+                        <Form.Label>Modelo</Form.Label>
+                        <Form.Select defaultValue='Selecione'>
                                 <option>Selecione</option>
                                 <option>Modelo 1</option>
                                 <option>Modelo 2</option>
                                 <option>Modelo 3</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="inputAno" class="form-label">Ano</label>
-                        <select id="inputAno" class="form-select">
+                        </Form.Select>
+                    </Form.Group>
+                    <Form.Group controlId="formGridAno" className="col-md-4 mb-3">
+                        <Form.Label>Ano</Form.Label>
+                        <Form.Select defaultValue='Selecione'>
                                 <option>Selecione</option>
                                 <option>1998</option>
                                 <option>1999</option>
                                 <option>2000</option>
-                        </select>
-                    </div>
+                        </Form.Select>
+                    </Form.Group>
                 </Row>
                 <Row className="mb-3">
-                    <div class="col-md-4">
-                        <label for="inputCor" class="form-label">Cor</label>
-                        <select id="inputCor" class="form-select">
+                    <Form.Group controlId="formGridCor" className="col-md-4 mb-3">
+                        <Form.Label>Cor</Form.Label>
+                        <Form.Select defaultValue='Selecione'>
                                 <option>Selecione</option>
                                 <option>Azul</option>
                                 <option>Preto</option>
                                 <option>Vermelho</option>
-                        </select>
-                    </div>
+                        </Form.Select>
+                    </Form.Group>
 
-                    <div class="col-md-4">
-                        <label for="inputkm" class="form-label">Kilometragem</label>
-                        <input type="number" maxLength="5" class="form-control" id="inputkm"></input>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="inputPlaca" class="form-label">Placa</label>
-                        <input type="text" class="form-control" id="inputPlaca"></input>
-                    </div>
+                    <Form.Group controlId="formGridKilometragem" className="col-md-4 mb-3">
+                        <Form.Label>Kilometragem</Form.Label>
+                        <Form.Control type="number">
+                        </Form.Control>
+                    </Form.Group>
+
+                    <Form.Group controlId="formGridPlaca" className="col-md-4 mb-3">
+                        <Form.Label>Placa</Form.Label>
+                        <Form.Control type="text" maxLength="8">
+                        </Form.Control>
+                    </Form.Group>
 
                 </Row>
                 <Row className="mb-3">
-                    <div class="col-md-6">
-                        <label for="inputFilial" class="form-label">Filial</label>
-                        <select id="inputFilial" class="form-select">
-                                <option>Selecione</option>
-                                <option>Jundiai</option>
-                                <option>Campinas</option>
-                                <option>Rio de Janeiro</option>
-                        </select>
-                    </div>
+                    <Form.Group controlId="formGridFilial" className="col-md-4 mb-3">
+                        <Form.Label>Filial</Form.Label>
+                        <Form.Select defaultValue='Selecione'>
+                            <option>Selecione</option>
+                            <option>Filial 1</option>
+                            <option>Filial 2</option>
+                            <option>Filial 3</option>
+                        </Form.Select>
+                    </Form.Group>
+                    <Form.Group controlId="formGridDescricao" className="col-md-8 mb-3">
+                        <Form.Label>Descricao</Form.Label>
+                        <Form.Control as="textarea">
+                        </Form.Control>
+                    </Form.Group>
                 </Row>
-                <Row className="mb-3">
+                {/* <Row className="mb-3">
                     <div class="input-group">
                         <span class="input-group-text">Descrição</span>
                         <textarea class="form-control" aria-label="Descrição"></textarea>
                     </div>
-                </Row>
+                </Row> */}
 
-            </form>
+            </Form>
             <div className="row">
                 <div className="d-flex justify-content-center mb-5">
-                    <Button Class='primary' Text='Limpar'></Button>
+                    <Button Class='secundary' Text='Limpar'></Button>
                     <Button Class='primary' Text='Salvar'></Button>
                 </div>
             </div>

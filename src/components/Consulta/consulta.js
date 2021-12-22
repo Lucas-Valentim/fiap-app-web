@@ -12,7 +12,7 @@ function Content() {
             </div>
             <Form className="container text-left">
                 <Row className="mb-3">
-                    <Form.Group controlId="formGridMarca" className="col-md-4 col-sm-1 mb-3">
+                    <Form.Group controlId="formGridMarca" className="col-md-4 mb-3">
                         <Form.Label>Marca</Form.Label>
                         <Form.Select defaultValue='Selecione'>
                             <option>Selecione</option>
@@ -21,7 +21,7 @@ function Content() {
                             <option>Marca 3</option>
                         </Form.Select>
                     </Form.Group>
-                    <Form.Group controlId="formGridAno" className="col-md-4 col-sm-1 mb-3">
+                    <Form.Group controlId="formGridAno" className="col-md-4 mb-3">
                         <Form.Label>Ano</Form.Label>
                         <Form.Select defaultValue='Selecione'>
                             <option>Selecione</option>
@@ -30,7 +30,7 @@ function Content() {
                             <option>Ano 3</option>
                         </Form.Select>
                     </Form.Group>
-                    <Form.Group controlId="formGridCor" className="col-md-4 col-sm-1 mb-3">
+                    <Form.Group controlId="formGridCor" className="col-md-4 mb-3">
                         <Form.Label>Cor</Form.Label>
                         <Form.Select defaultValue='Selecione'>
                             <option>Selecione</option>
@@ -42,7 +42,7 @@ function Content() {
                 </Row>
 
                 <Row className="mb-3">
-                    <Form.Group controlId="formGridModelo" className="col-md-4 col-sm-1 mb-3">
+                    <Form.Group controlId="formGridModelo" className="col-md-4 mb-3">
                         <Form.Label>Modelo</Form.Label>
                         <Form.Select defaultValue='Selecione'>
                             <option>Selecione</option>
@@ -52,17 +52,13 @@ function Content() {
                         </Form.Select>
                     </Form.Group>
 
-                    <Form.Group controlId="formGridKilometragem" className="col-md-4 col-sm-1 mb-3">
+                    <Form.Group controlId="formGridKilometragem" className="col-md-4 mb-3">
                         <Form.Label>Kilometragem</Form.Label>
-                        <Form.Select defaultValue='Selecione'>
-                            <option>Selecione</option>
-                            <option>Kilometragem 1</option>
-                            <option>Kilometragem 2</option>
-                            <option>Kilometragem 3</option>
-                        </Form.Select>
+                        <Form.Control type="number">
+                        </Form.Control>
                     </Form.Group>
 
-                    <Form.Group controlId="formGridFilial" className="col-md-4 col-sm-1 mb-3">
+                    <Form.Group controlId="formGridFilial" className="col-md-4 mb-3">
                         <Form.Label>Filial</Form.Label>
                         <Form.Select defaultValue='Selecione'>
                             <option>Selecione</option>
@@ -75,7 +71,7 @@ function Content() {
             </Form>
             <div className="row">
                 <div className="d-flex justify-content-center mb-5">
-                    <Button Class='primary' Text='Limpar'></Button>
+                    <Button Class='secundary' Text='Limpar'></Button>
                     <Button Class='primary' Text='Filtrar'></Button>
                 </div>
             </div>
