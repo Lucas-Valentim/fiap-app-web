@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './Home.css'
 import Button from '../button'
-import Consulta from '../Consulta/consulta'
+import Consulta from '../Consulta/ConsultaView'
 import Cadastro from '../Cadastro/CadastroView'
 import Logo from '../logotipo.png'
 import Profile from '../imageprofile.png'

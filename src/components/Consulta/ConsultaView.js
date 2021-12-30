@@ -3,8 +3,13 @@ import './consulta.css';
 import Button from '../button'
 import { Form, Row, Table } from 'react-bootstrap'
 
-function Content() {
-    
+const ConsultaView = (props) => {
+
+    let listaMarcas = props.buscaMarcas;
+
+    console.log("ENTROU NA CONSULTA VIEW!!");
+    console.log("conteúdo do listaMarcas" + listaMarcas);
+        
     return (
         <section className="container">
             <div className="row text-left">
@@ -14,11 +19,9 @@ function Content() {
                 <Row className="mb-3">
                     <Form.Group controlId="formGridMarca" className="col-md-4 mb-3">
                         <Form.Label>Marca</Form.Label>
-                        <Form.Select defaultValue='Selecione'>
-                            <option>Selecione</option>
-                            <option>Marca 1</option>
-                            <option>Marca 2</option>
-                            <option>Marca 3</option>
+                        <Form.Select defaultValue='Selecione' onClick={listaMarcas}>
+                        <option>Selecione</option>
+                        <option>{props.listaMarcas}</option>
                         </Form.Select>
                     </Form.Group>
                     <Form.Group controlId="formGridAno" className="col-md-4 mb-3">
@@ -152,4 +155,4 @@ function Content() {
     );
 }
 
-export default Content;
+export default ConsultaView;
