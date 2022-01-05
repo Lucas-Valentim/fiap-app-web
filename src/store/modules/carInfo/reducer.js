@@ -8,7 +8,10 @@ const INITIAL_STATE = {
     km: 0,
     placa: '',
     listaFiliais: [],
-    descricao: ''};
+    descricao: '',
+    isConnection: false,
+    Success: 0
+};
 
 export default function carInfo(state = INITIAL_STATE, {type, payload}){
 
@@ -17,22 +20,31 @@ export default function carInfo(state = INITIAL_STATE, {type, payload}){
         switch(type) {
 
             case 'carInfo/GET_LISTA_MARCAS': {
-                console.log("REDUCER carInfo/GET_LISTA_MARCAS" + payload.listaMarcas);
-                draft.listaMarcas = payload.listaMarcas;
+                console.log("REDUCER carInfo/GET_LISTA_MARCAS");
+                break;
+            }
+                case 'carInfo/GET_LISTA_MARCAS_START': {
+                console.log("REDUCER carInfo/GET_LISTA_MARCAS_START");
+                draft.isConnection = true;
+                draft.Success = 0;
                 break;            
             }
             case 'carInfo/GET_LISTA_MARCAS_SUCCESS': {
-                console.log("REDUCER carInfo/GET_LISTA_MARCAS_SUCCESS" + String(payload.listaMarcas));
+                console.log("REDUCER carInfo/GET_LISTA_MARCAS_SUCCESS");
                 draft.listaMarcas = payload.listaMarcas;
+                draft.isConnection = false;
+                draft.Success = 1;
                 break;
             }
             case 'carInfo/GET_LISTA_MARCAS_ERROR': {
                 console.log("REDUCER carInfo/GET_LISTA_MARCAS_ERROR");
                 draft.listaMarcas = [];
+                draft.isConnection = false;
+                draft.Success = 2;
                 break;
             }
 
-            default: return state;
+            default:
         }
     });
 }

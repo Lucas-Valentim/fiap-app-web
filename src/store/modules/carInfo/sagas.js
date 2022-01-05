@@ -1,23 +1,17 @@
 import { takeLatest, call, put, all, select } from 'redux-saga/effects';
 import api from '../../../services/api';
-import { getListaMarcas, getListaMarcasSuccess, getListaMarcaseError } from './actions';
+import { getListaMarcas, getListaMarcasSuccess, getListaMarcaseError, getListaMarcasStart } from './actions';
 
-function* getMarcas({ payload }){
+function* getMarcas(){
 
-    try{
+    try {
 
-        console.log("entrou no SAGA 1 ");
-        const  {listaMarcas} = payload;
+        console.log("Starting Connection:");
+        yield put(getListaMarcasStart());
 
-        console.log("entrou no SAGA 2");
-
-      //  yield put(getListaMarcas(listaMarcas));
-
-        console.log("entrou no SAGA 3 ");
-
-        const returnInfo = yield call(api.get, '/veiculos/listarmarcas');
+        const returnInfo = yield call(api.get, '/listarmarcas');
         
-        console.log("Retorno API listarmarcas" + returnInfo.data);
+        console.log("Retorno API listarmarcas" + JSON.stringify(returnInfo.data));
         
 
         if (returnInfo.data instanceof Array){
@@ -29,7 +23,8 @@ function* getMarcas({ payload }){
         } 
 
     }catch(err){
-        console.log("Error Call");    
+        console.log("Error Call");   
+        yield put(getListaMarcaseError());
     }
 
 }
