@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import './consulta.css';
 import Button from '../button'
-import api from '../../services/api';
-import { call } from 'redux-saga/effects';
 import { Form, Row, Table } from 'react-bootstrap'
 
 const ConsultaView = (props) => {
-    console.log("ENTROU NA CONSULTA VIEW!!");
-    console.log("conteúdo do listaMarcas" + props.listaMarcas);
-        
+
+ 
+    const montarLista = () => {
+
+        console.log("ENTROU NO MONTA LISTA!!");3
+        props.buscaMarcas();
+
+        console.log("Lista de Marcas no View: " + props.listaMarcas);
+         
+    }
+       
     return (
         <section className="container">
             <div className="row text-left">
@@ -18,11 +24,8 @@ const ConsultaView = (props) => {
                 <Row className="mb-3">
                     <Form.Group controlId="formGridMarca" className="col-md-4 mb-3">
                         <Form.Label>Marca</Form.Label>
-                        <Form.Select defaultValue='Selecione' onClick={props.buscaMarcas}>
-                            <option>Selecione</option>
-                            {props.listaMarcas.map(key => {
-                                return (<option value={key.codMarca}>{key.descricao}</option>)
-                            })}
+                        <Form.Select defaultValue='Selecione' onClick={montarLista} >
+                       
                         </Form.Select>
                     </Form.Group>
                     <Form.Group controlId="formGridAno" className="col-md-4 mb-3">
@@ -155,5 +158,6 @@ const ConsultaView = (props) => {
         </section>
     );
 }
+
 
 export default ConsultaView;
