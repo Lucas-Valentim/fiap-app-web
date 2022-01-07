@@ -1,8 +1,13 @@
-export function getListaMarcas(listaMarcas) {
+export function getListaMarcas() {
     console.log("Action getListaMarcas");
     return{
-        type: 'carInfo/GET_LISTA_MARCAS_SAGA',
-        payload: { listaMarcas },
+        type: 'carInfo/GET_LISTA_MARCAS',
+    };
+}
+
+export function getListaMarcasStart() {
+    return {
+        type: 'carInfo/GET_LISTA_MARCAS_START',
     };
 }
 
