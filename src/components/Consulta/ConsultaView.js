@@ -6,8 +6,15 @@ import { call } from 'redux-saga/effects';
 import { Form, Row, Table } from 'react-bootstrap'
 
 const ConsultaView = (props) => {
-    console.log("ENTROU NA CONSULTA VIEW!!");
-    console.log("conteúdo do listaMarcas" + props.listaMarcas);
+
+    function CarregarModelos() {
+        var cmbMarca = document.getElementById('cmbMarcas');
+        var codMarca = cmbMarca?.value ?? 0;
+        props.buscaModelos(codMarca);
+    }
+    function ChangeModelo() {
+        document.getElementById("cmbModelos").selectedIndex = 0;
+    }
         
     return (
         <section className="container">
@@ -18,9 +25,9 @@ const ConsultaView = (props) => {
                 <Row className="mb-3">
                     <Form.Group controlId="formGridMarca" className="col-md-4 mb-3">
                         <Form.Label>Marca</Form.Label>
-                        <Form.Select defaultValue='Selecione' onClick={props.buscaMarcas}>
+                        <Form.Select id="cmbMarcas" defaultValue='Selecione' onChange={ChangeModelo}>
                             <option>Selecione</option>
-                            {props.listaMarcas.map(key => {
+                            {props.veiculo.listaMarcas?.map(key => {
                                 return (<option value={key.codMarca}>{key.descricao}</option>)
                             })}
                         </Form.Select>
@@ -29,18 +36,18 @@ const ConsultaView = (props) => {
                         <Form.Label>Ano</Form.Label>
                         <Form.Select defaultValue='Selecione'>
                             <option>Selecione</option>
-                            <option>Ano 1</option>
-                            <option>Ano 2</option>
-                            <option>Ano 3</option>
+                            {props.veiculo.listaAno?.map(key => {
+                                return (<option value={key}>{key}</option>)
+                            })}
                         </Form.Select>
                     </Form.Group>
                     <Form.Group controlId="formGridCor" className="col-md-4 mb-3">
                         <Form.Label>Cor</Form.Label>
                         <Form.Select defaultValue='Selecione'>
                             <option>Selecione</option>
-                            <option>Cor 1</option>
-                            <option>Cor 2</option>
-                            <option>Cor 3</option>
+                            {props.veiculo.listaCor?.map(key => {
+                                return (<option value={key.codCor}>{key.cor}</option>)
+                            })}
                         </Form.Select>
                     </Form.Group>
                 </Row>
@@ -48,27 +55,21 @@ const ConsultaView = (props) => {
                 <Row className="mb-3">
                     <Form.Group controlId="formGridModelo" className="col-md-4 mb-3">
                         <Form.Label>Modelo</Form.Label>
-                        <Form.Select defaultValue='Selecione'>
+                        <Form.Select id="cmbModelos" defaultValue='Selecione' onClick={CarregarModelos}>
                             <option>Selecione</option>
-                            <option>Modelo 1</option>
-                            <option>Modelo 2</option>
-                            <option>Modelo 3</option>
+                            {props.Modelos?.map(key => {
+                                return (<option value={key.codModelo}>{key.descricao}</option>)
+                            })}
                         </Form.Select>
-                    </Form.Group>
-
-                    <Form.Group controlId="formGridKilometragem" className="col-md-4 mb-3">
-                        <Form.Label>Kilometragem</Form.Label>
-                        <Form.Control type="number">
-                        </Form.Control>
                     </Form.Group>
 
                     <Form.Group controlId="formGridFilial" className="col-md-4 mb-3">
                         <Form.Label>Filial</Form.Label>
                         <Form.Select defaultValue='Selecione'>
                             <option>Selecione</option>
-                            <option>Filial 1</option>
-                            <option>Filial 2</option>
-                            <option>Filial 3</option>
+                            {props.veiculo.listaFiliais?.map(key => {
+                                return (<option value={key.codFilial}>{key.razaoSocial}</option>)
+                            })}
                         </Form.Select>
                     </Form.Group>
                 </Row>
