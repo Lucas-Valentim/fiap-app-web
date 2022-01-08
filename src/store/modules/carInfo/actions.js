@@ -5,24 +5,56 @@ export function getListaMarcas() {
     };
 }
 
-export function getListaMarcasStart() {
-    return {
-        type: 'carInfo/GET_LISTA_MARCAS_START',
+export function getSuccess(veiculo) {
+    console.log("Aciont getSuccess");
+    return{
+        type: 'carInfo/GET_SUCCESS',
+        payload: { veiculo },
     };
 }
 
-export function getListaMarcasSuccess(listaMarcas) {
-    console.log("Aciont getListaMarcasSuccess");
+export function getError(err) {
+    console.log(`Aciont getError: ${err}`);
     return{
-        type: 'carInfo/GET_LISTA_MARCAS_SUCCESS',
-        payload: { listaMarcas },
-    };
-}
-
-export function getListaMarcaseError() {
-    console.log("Aciont getListaMarcasError");
-    return{
-        type: 'carInfo/GET_LISTA_MARCAS_ERROR',
+        type: 'carInfo/GET_ERROR',
         payload: { },
     };
 }
+
+export function getListaModelos(param) {
+    console.log("Action getListaModelos");
+    return{
+        type: 'carInfo/GET_LISTA_MODELOS',
+        payload: {param}
+    };
+}
+
+export function getListaCores() {
+    console.log("Action getListaCores");
+    return{
+        type: 'carInfo/GET_LISTA_CORES',
+    };
+}
+
+export function getCor(param) {
+    console.log("Action getCor");
+    return{
+        type: 'carInfo/GET_COR',
+        payload: {param}
+    };
+}
+
+export function getListaFiliais() {
+    console.log("Action getListaFiliais");
+    return{
+        type: 'carInfo/GET_LISTA_FILIAIS',
+    };
+}
+
+export function getListaAnos() {
+    console.log("Action getListaAnos");
+    return{
+        type: 'carInfo/GET_LISTA_ANOS',
+    };
+}
+
