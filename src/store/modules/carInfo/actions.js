@@ -57,4 +57,37 @@ export function getListaAnos() {
         type: 'carInfo/GET_LISTA_ANOS',
     };
 }
+export function createVeiculo(idMarca, idModelo, ano, idCor, km, placa, idFilial, 
+    descricao, renavam, valor) {
+
+console.log("Action createVeiculo" + idMarca);
+
+return {
+type: 'carInfo/CREATE_VEICULO',
+payload: { idMarca, idModelo, ano, idCor, km, placa, idFilial, descricao, renavam, valor},
+};
+}
+
+export function createVeiculoStart() {
+return {
+type: 'carInfo/CREATE_VEICULO_START',
+};
+}
+
+export function createVeiculoError() {
+console.log("Aciont reateVeiculoError");
+return{
+type: 'carInfo/CREATE_VEICULO_ERROR',
+payload: { },
+};
+
+}
+
+export function createVeiculoSuccess() {
+console.log("Aciont createVeiculoSuccess");
+return{
+type: 'carInfo/CREATE_VEICULO_SUCCESS',
+payload: { },
+};
+}
 

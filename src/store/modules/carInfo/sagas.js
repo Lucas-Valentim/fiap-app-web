@@ -1,6 +1,7 @@
 import { takeLatest, call, put, all, select } from 'redux-saga/effects';
 import api from '../../../services/api';
-import { getError, getSuccess } from './actions';
+import { getError, getSuccess,createVeiculoStart, 
+    createVeiculoError, createVeiculoSuccess  } from './actions';
 
 function* getMarcas() {    
     var veiculo = { listaMarcas: [], listaModelos: [], listaAno: [], listaCor: [], km: 0, placa: '', listaFiliais: [], descricao: '', isConnection: false, Success: 0
@@ -103,6 +104,43 @@ function* getAnos(){
     }
 }
 
+function* createVeiculo({ payload }){
+
+    try {
+
+        console.log("Starting Connection CreateVeiculo 1:");
+        yield put(createVeiculoStart());
+        console.log("Starting Connection CreateVeiculo 2:");
+        const { idMarca, idModelo, ano, idCor, km, placa, idFilial, descricao, renavam, valor } = payload;
+       console.log("Starting Connection CreateVeiculo 3:");
+       console.log ("Payload Dados do Veiculo:" + idMarca);
+
+       const dataBody = {
+        codModelo: idModelo, 
+        km: km, 
+        codCor: idCor, 
+        placa: placa, 
+        codFilial: idFilial, 
+        descricao: descricao, 
+        renavam: renavam, 
+        valor: valor
+       };
+
+       console.log("dados do body: " + (JSON.stringify(dataBody)));
+
+       const returnInfo = yield call(api.post, '/cadastro', JSON.stringify(dataBody));
+                                   
+      // console.log("Retorno API Cadastro" + JSON.stringify(returnInfo.data));
+
+       yield put(createVeiculoSuccess(returnInfo.data));
+   
+    }catch(err){
+        console.log("Error Call");   
+        yield put(createVeiculoError());
+    }
+
+}
+
 
 
 //Junta todos as sagas deste objeto
@@ -113,4 +151,5 @@ export default all([
     takeLatest('carInfo/GET_COR', getCor),
     takeLatest('carInfo/GET_LISTA_FILIAIS', getFiliais),
     takeLatest('carInfo/GET_LISTA_ANOS', getAnos),
+    takeLatest('carInfo/CREATE_VEICULO', createVeiculo),
 ]);

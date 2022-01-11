@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from 'react-router-dom';
-import Cadastro from '../Cadastro/CadastroView';
+import CadastroController from '../Cadastro/CadastroController';
 import Home from '../Home/HomeController';
 import ConsultaController from "../Consulta/ConsultaController";
 
@@ -13,7 +13,7 @@ export default () => {
             <Route path="/"  element={ <ConsultaController /> }> 
             </Route>
 
-            <Route path="/cadastro"  element={ <Cadastro /> }>
+            <Route path="/cadastro"  element={ <CadastroController /> }>
             </Route>
             
             <Route path="/consulta"  element={ <ConsultaController /> }>

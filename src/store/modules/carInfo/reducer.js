@@ -59,6 +59,24 @@ export default function carInfo(state = INITIAL_STATE, {type, payload}){
                 draft.veiculo.Success = 2;
                 break;
             }
+            case 'carInfo/CREATE_VEICULO_START': {
+                console.log("REDUCER carInfo/CREATE_VEICULO_START");
+                draft.veiculo.isConnection = true;
+                draft.veiculo.Success = 0;
+                break;            
+            }
+            case 'carInfo/CREATE_VEICULO_SUCCESS': {
+                console.log("REDUCER carInfo/CREATE_VEICULO_SUCCESS");
+                draft.veiculo.isConnection = false;
+                draft.veiculo.Success = 1;
+                break;
+            }
+            case 'carInfo/CREATE_VEICULO_ERROR': {
+                console.log("REDUCER carInfo/CREATE_VEICULO_ERROR");
+                draft.veiculo.isConnection = false;
+                draft.veiculo.Success = 2;
+                break;
+            }
 
             default:
         }
