@@ -1,23 +1,42 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './Home.css'
-import Button from '../button'
-import Consulta from '../Consulta/ConsultaView'
-import Cadastro from '../Cadastro/CadastroView'
+import React from "react";
 import Logo from '../logotipo.png'
 import Profile from '../imageprofile.png'
 import { Navbar, Container, Nav, NavDropdown, Form, Offcanvas, FormControl } from 'react-bootstrap'
-import {Link, useHistory } from 'react-router-dom'
+import {Link } from 'react-router-dom'
+import { select } from 'redux-saga/effects';
 
-function changeSelected(e) {
-  var oldSelected = document.getElementsByClassName('Selected')[0];
-  oldSelected.classList.remove('Selected')
-  var btnSelected = document.getElementById(e.target.id)
-  btnSelected.classList.add('Selected')
 
-  var offcanvas = document.getElementsByClassName('btn-close')[0];
-  offcanvas.click()
-}
-function HomeView() {
+
+  
+const HomeView = () => {
+
+  const [selectedConsulta, setSelectedConsulta] = React.useState("");
+  const [selectedCadastro, setSelectedCadastro] = React.useState("");
+
+  if(!selectedConsulta && !selectedCadastro)
+    setSelectedConsulta(' Selected');  
+  
+  function changeSelected(e) {
+    if (e.target.id == 'btnCadastrar') {
+      setSelectedConsulta('')
+      setSelectedCadastro(' Selected')
+    }
+    else {
+      setSelectedConsulta(' Selected')
+      setSelectedCadastro('')
+    }
+    var offcanvas = document.getElementsByClassName('btn-close')[0];
+    offcanvas.click()
+  }
+
+  // var oldSelected = document.getElementsByClassName('Selected')[0];
+  // if(oldSelected)
+  //   oldSelected.classList.remove('Selected')
+  // var btnSelected = document.getElementById(selected ?? 'btnConsultar')
+  // if(btnSelected)
+  //   btnSelected.classList.add('Selected')
 
   return (
     <div className="App"> 
@@ -36,8 +55,8 @@ function HomeView() {
       <Offcanvas.Body>
               <Nav className="justify-content-end pe-3">
                 <img src={Logo} className='logo' alt='Logo'></img>
-                <Link to="/consulta" Id='btnConsultar' type="Button" class="btnMenu Selected" onClick={ e => changeSelected(e)}>Consultar</Link>   
-                <Link to="/cadastro" Id='btnCadastrar' type="Button" class="btnMenu" onClick={ e => changeSelected(e)}>Cadastrar</Link>   
+                <Link to="/consulta" Id='btnConsultar' type="Button" class={'btnMenu' + selectedConsulta} onClick={ e => changeSelected(e)}>Consultar</Link>   
+                <Link to="/cadastro" Id='btnCadastrar' type="Button" class={'btnMenu' + selectedCadastro} onClick={e => changeSelected(e)}>Cadastrar</Link>
               </Nav>
       </Offcanvas.Body>
     </Navbar.Offcanvas>
