@@ -2,6 +2,7 @@ import produce from "immer";
 
 const INITIAL_STATE = { 
     veiculo: {
+        veiculos: [],
         listaMarcas: [],
         listaModelos: [],
         listaAno: [],
@@ -10,6 +11,7 @@ const INITIAL_STATE = {
         placa: '',
         listaFiliais: [],
         descricao: '',
+        consulta: false,
         isConnection: false,
         Success: 0
     }
@@ -45,11 +47,16 @@ export default function carInfo(state = INITIAL_STATE, {type, payload}){
                 console.log("REDUCER carInfo/GET_LISTA_ANOS");
                 break;
             }
+            case 'carInfo/GET_VEICULOS': {
+                console.log("REDUCER carInfo/GET_VEICULOS");
+                break;
+            }
             case 'carInfo/GET_SUCCESS': {
                 console.log("REDUCER carInfo/GET_SUCCESS");
                 draft.veiculo = payload.veiculo;
                 draft.veiculo.isConnection = false;
                 draft.veiculo.Success = 1;
+                draft.veiculo.consulta = true;
                 break;
             }
             case 'carInfo/GET_ERROR': {

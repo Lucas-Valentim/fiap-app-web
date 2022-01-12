@@ -57,6 +57,15 @@ export function getListaAnos() {
         type: 'carInfo/GET_LISTA_ANOS',
     };
 }
+
+export function getVeiculos(codMarca, codModelo, ano, codEmpresa, codCor) {
+    console.log("Action getVeiculos");
+    return{
+        type: 'carInfo/GET_VEICULOS',
+        payload: {codMarca, codModelo, ano, codEmpresa, codCor}
+    };
+}
+
 export function createVeiculo(idMarca, idModelo, ano, idCor, km, placa, idFilial, 
     descricao, renavam, valor) {
 

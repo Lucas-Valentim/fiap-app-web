@@ -1,23 +1,21 @@
 import React from 'react';
-import {BrowserRouter} from 'react-router-dom'
-import Routers from '../Rotas/Routers'
-import store from '../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import ConsultaView from './ConsultaView'
-import carInfo from '../../store/modules/carInfo/reducer';
-import { getCor, getListaAnos, getListaCores, getListaFiliais, getListaMarcas, getListaModelos } from '../../store/modules/carInfo/actions';
+import { getVeiculos, getListaModelos } from '../../store/modules/carInfo/actions';
 
 const ConsultaController = () => {
 
     console.log("CHEGOU NO CONSULTA CONTROLLER");
 
     //Busca as variaveis do Reducer
-    const listarModelos = useSelector((state) => state.carInfo.veiculo.listaModelos);
+    // const listarModelos = useSelector((state) => state.carInfo.veiculo.listaModelos);
+    const listarVeiculos = useSelector((state) => state.carInfo.veiculo);
   
    // Inicia o dispatch
     const dispatch = useDispatch();
 
     var veiculo = {
+        veiculos: [], 
         listaMarcas: [],
         listaModelos: [],
         listaAno: [],
@@ -51,19 +49,38 @@ const ConsultaController = () => {
         veiculo.listaFiliais = JSON.parse(respFiliais.responseText);
     }
 
-    var anos = [2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008, 2007, 2006, 2005, 2004, 2003, 2002, 2001, 2000, 1999, 1998, 1997, 1996, 1995, 1994, 1993, 1992, 1991, 1990]
-    veiculo.listaAno = anos
-
-    const buscaModelos = (codMarca) => {
-        console.log("entrou no buscaModelos");
-        var lst = dispatch(getListaModelos(codMarca == 'Selecione' ? 0 : codMarca));
+    const buscaVeiculosReducer = (codMarca, codModelo, ano, codEmpresa, codCor) => {
+        console.log("entrou no buscaVeiculosReducer" + codMarca+ '/' + codModelo+ '/' + ano+ '/' + codEmpresa+ '/' + codCor);
+        var lst = dispatch(getVeiculos(codMarca, codModelo, ano, codEmpresa, codCor));
         return lst
     }
 
+    var respVeiculos = new XMLHttpRequest();
+    respVeiculos.open('GET', 'http://localhost:8088/veiculos/consultar/' + 0 + '/' + 0 + '/' + 0 + '/' + 0 + '/' + 0, false)
+    respVeiculos.send(null);
+    console.log("status: " + respVeiculos.status);
+    if (respVeiculos.status === 200) {
+        veiculo.veiculos = JSON.parse(respVeiculos.responseText);
+    }
+
+
+    
+
+    var anos = [2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008, 2007, 2006, 2005, 2004, 2003, 2002, 2001, 2000, 1999, 1998, 1997, 1996, 1995, 1994, 1993, 1992, 1991, 1990]
+    veiculo.listaAno = anos
+
+    // const buscaModelos = (codMarca) => {
+    //     console.log("entrou no buscaModelos");
+    //     var lst = dispatch(getListaModelos(codMarca));
+    //     return lst
+    // }
+
     return (
         <ConsultaView
-            buscaModelos={buscaModelos}
-            Modelos={listarModelos}
+            // buscaModelos={buscaModelos}
+            buscaVeiculos={buscaVeiculosReducer}
+            // Modelos={listarModelos}
+            Veiculos={listarVeiculos}
             veiculo={veiculo}
         />
     )

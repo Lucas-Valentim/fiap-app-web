@@ -1,19 +1,58 @@
 import React from "react";
+import $ from 'jquery';
 import './consulta.css';
 import Button from '../button'
-import api from '../../services/api';
-import { call } from 'redux-saga/effects';
 import { Form, Row, Table } from 'react-bootstrap'
 
 const ConsultaView = (props) => {
 
-    function CarregarModelos() {
-        var cmbMarca = document.getElementById('cmbMarcas');
-        var codMarca = cmbMarca?.value ?? 0;
-        props.buscaModelos(codMarca);
+    // console.log('veiculos: ' + JSON.stringify(props.veiculo))
+    // console.log('veiculos2: ' + JSON.stringify(props.Veiculos))
+    // if(!props.veiculo.consulta)
+    //     console.log('props.veiculo.consulta: ' + JSON.stringify(props.Veiculos.consulta))
+
+    const [selected, setSelected] = React.useState("");
+    let options = null;
+
+    const buscaModelos = () => {
+
+        var codMarca = document.getElementById('cmbMarcas')?.value ?? 0;
+        var respModelo = new XMLHttpRequest();
+        respModelo.open('GET', 'http://localhost:8088/veiculos/listarmodelos/' + codMarca, false)
+        respModelo.send(null);
+        console.log("status: " + respModelo.status);
+        if (respModelo.status === 200) {
+             var modelo = JSON.parse(respModelo.responseText);
+
+            /* Remove all options from the select list */
+            $('cmbModelos').empty();
+
+            options = modelo.map((key) => <option value={key.codModelo}>{key.descricao}</option>);
+        }
     }
-    function ChangeModelo() {
+
+    buscaModelos()
+
+    function ChangeModelo(event) {
+        setSelected(event.target.value);
         document.getElementById("cmbModelos").selectedIndex = 0;
+    }
+
+    function BuscarVeiculos() {
+        var codMarca = document.getElementById('cmbMarcas')?.value ?? 0;
+        var codAno = document.getElementById('cmbAno')?.value ?? 0;
+        var codCor = document.getElementById('cmbCor')?.value ?? 0;
+        var codModelos = document.getElementById('cmbModelos')?.value ?? 0;
+        var codFilial = document.getElementById('cmbFilial')?.value ?? 0;
+        props.buscaVeiculos(codMarca, codModelos, codAno, codFilial, codCor);
+    }
+
+    const limparCampos = () => {
+        document.getElementById('cmbMarcas').selectedIndex = 0;
+        document.getElementById('cmbAno').selectedIndex = 0;
+        document.getElementById('cmbCor').selectedIndex = 0;
+        document.getElementById('cmbModelos').selectedIndex = 0;
+        document.getElementById("cmbFilial").selectedIndex = 0;
     }
         
     return (
@@ -25,8 +64,8 @@ const ConsultaView = (props) => {
                 <Row className="mb-3">
                     <Form.Group controlId="formGridMarca" className="col-md-4 mb-3">
                         <Form.Label>Marca</Form.Label>
-                        <Form.Select id="cmbMarcas" defaultValue='Selecione' onChange={ChangeModelo}>
-                            <option>Selecione</option>
+                        <Form.Select id="cmbMarcas" defaultValue='Selecione' onChange={e => ChangeModelo(e)}>
+                            <option value={0}>Selecione</option>
                             {props.veiculo.listaMarcas?.map(key => {
                                 return (<option value={key.codMarca}>{key.descricao}</option>)
                             })}
@@ -34,8 +73,8 @@ const ConsultaView = (props) => {
                     </Form.Group>
                     <Form.Group controlId="formGridAno" className="col-md-4 mb-3">
                         <Form.Label>Ano</Form.Label>
-                        <Form.Select defaultValue='Selecione'>
-                            <option>Selecione</option>
+                        <Form.Select id='cmbAno' defaultValue='Selecione'>
+                            <option value={0}>Selecione</option>
                             {props.veiculo.listaAno?.map(key => {
                                 return (<option value={key}>{key}</option>)
                             })}
@@ -43,8 +82,8 @@ const ConsultaView = (props) => {
                     </Form.Group>
                     <Form.Group controlId="formGridCor" className="col-md-4 mb-3">
                         <Form.Label>Cor</Form.Label>
-                        <Form.Select defaultValue='Selecione'>
-                            <option>Selecione</option>
+                        <Form.Select id='cmbCor' defaultValue='Selecione'>
+                            <option value={0}>Selecione</option>
                             {props.veiculo.listaCor?.map(key => {
                                 return (<option value={key.codCor}>{key.cor}</option>)
                             })}
@@ -55,18 +94,19 @@ const ConsultaView = (props) => {
                 <Row className="mb-3">
                     <Form.Group controlId="formGridModelo" className="col-md-4 mb-3">
                         <Form.Label>Modelo</Form.Label>
-                        <Form.Select id="cmbModelos" defaultValue='Selecione' onClick={CarregarModelos}>
-                            <option>Selecione</option>
-                            {props.Modelos?.map(key => {
+                        <Form.Select id="cmbModelos" defaultValue='Selecione' onClick={buscaModelos}>
+                            <option value={0}>Selecione</option>
+                            {options}
+                            {/* {props.Modelos?.map(key => {
                                 return (<option value={key.codModelo}>{key.descricao}</option>)
-                            })}
+                            })} */}
                         </Form.Select>
                     </Form.Group>
 
                     <Form.Group controlId="formGridFilial" className="col-md-4 mb-3">
                         <Form.Label>Filial</Form.Label>
-                        <Form.Select defaultValue='Selecione'>
-                            <option>Selecione</option>
+                        <Form.Select id="cmbFilial" defaultValue='Selecione'>
+                            <option value={0}>Selecione</option>
                             {props.veiculo.listaFiliais?.map(key => {
                                 return (<option value={key.codFilial}>{key.razaoSocial}</option>)
                             })}
@@ -76,80 +116,45 @@ const ConsultaView = (props) => {
             </Form>
             <div className="row">
                 <div className="d-flex justify-content-center mb-5">
-                    <Button Class='secundary' Text='Limpar'></Button>
-                    <Button Class='primary' Text='Filtrar'></Button>
+                    <Button Class='secundary' Text='Limpar' ClickFunction={limparCampos}></Button>
+                    <Button Class='primary' Text='Filtrar' ClickFunction={BuscarVeiculos}></Button>
                 </div>
             </div>
 
             <Table striped bordered hover size="sm">
                 <thead>
                     <tr>
-                    <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Username</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Ano</th>
+                    <th>Filial</th>
+                    <th>Cor</th>
+                    <th>Valor</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    </tr>
-                    <tr>
-                    <td>2</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    </tr>
-                    <tr>
-                    <td>3</td>
-                    <td colSpan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                    </tr>
-                    <tr>
-                    <td>4</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    </tr>
-                    <tr>
-                    <td>5</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    </tr>
-                    <tr>
-                    <td>6</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    </tr>
-                    <tr>
-                    <td>7</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    </tr>
-                    <tr>
-                    <td>8</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    </tr>
-                    <tr>
-                    <td>9</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    </tr>
-                    <tr>
-                    <td>10</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    </tr>
+                    {!props.Veiculos.consulta ? props.veiculo.veiculos?.map(key => {
+                        return (<tr>
+                            <td>{key.codModelo.codMarca.marca}</td>
+                            <td>{key.codModelo.modelo}</td>
+                            <td>{key.codModelo.ano}</td>
+                            <td>{key.codFilial.razaoSocial}</td>
+                            <td>{key.codCor.cor}</td>
+                            <td>{key.valor}</td>
+                        </tr>
+                        )})
+                     : props.Veiculos?.veiculos.map(key => {
+                        return (<tr>
+                                <td>{key.codModelo.codMarca.marca}</td>
+                                <td>{key.codModelo.modelo}</td>
+                                <td>{key.codModelo.ano}</td>
+                                <td>{key.codFilial.razaoSocial}</td>
+                                <td>{key.codCor.cor}</td>
+                                <td>{key.valor}</td>
+                                </tr>
+                                )
+                        })
+                    }
                 </tbody>
             </Table>
 
