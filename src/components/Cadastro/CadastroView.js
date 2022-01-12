@@ -21,16 +21,111 @@ const CadastroView = (props) => {
     }
     /*Fim Implementação Lucas*/
 
+    function formataValor() {
 
-    //Apresentar mensagem na tela de cadastramento ok e não ok
-    if (props.Success === 1) {
-        console.log("Entrou no Cadastro Realizado com Sucesso!");
-        infoMessage = 'Cadastro Realizado com Sucesso!'; 
-        //Exibe mensagem caso o cadastro não tenha sido realizado
-    } else if (props.Success === 2) {
-        console.log("Entrou no Erro ao incluir Veículo!");
-        infoMessage ='Erro ao incluir o Veículo!';
-     };
+        console.log("Entrou no formataValor");
+
+        const formatter = new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        });
+
+        var valorAtual = document.getElementById("txtValor").value;
+        var valorFormatado = formatter.format(valorAtual);
+
+        console.log("Valor Atual: " + valorAtual);
+        console.log("Valor Formatado: " + valorFormatado)
+
+        document.getElementById("txtValor").value = valorFormatado;
+
+    }
+
+    /* Consistência dos dados imputados do veículo */
+    function validaCadastro() {
+
+        var statusValidacaoOK = true;
+        var lengthRenavam = document.getElementById("txtRenavam").value.length;
+        var lengthKM = document.getElementById("txtKM").value.length;
+        var lengthPlaca = document.getElementById("txtPlaca").value.length;
+        var lengthValor = document.getElementById("txtValor").value.length;
+
+        console.log("Entrou no valida cadastro");
+        console.log("tamanho do renavam : " + lengthRenavam);
+
+
+        if (document.getElementById("cmbMarcas").selectedIndex === 0) {
+
+            statusValidacaoOK = false;
+
+            alert("Marca não selecionada!");
+
+        } else if (document.getElementById("cmbModelos").selectedIndex === 0) {
+            statusValidacaoOK = false;
+
+            alert("Modelo não selecionado!");
+
+        } else if (document.getElementById("cmbAno").selectedIndex === 0) {
+            statusValidacaoOK = false;
+
+            alert("Ano não selecionado!");
+
+        } else if ((lengthRenavam > 9) || (lengthRenavam === 0) ) {
+
+            statusValidacaoOK = false;
+            alert("Renavam inválido!");
+
+        } else if (document.getElementById("cmbCor").selectedIndex === 0) {
+            statusValidacaoOK = false;
+
+            alert("Cor não selecionado!");
+
+        } else if (lengthKM > 6) {
+
+            statusValidacaoOK = false;
+            alert("KM com tamanho maior que o permitido!");
+
+        } else if (document.getElementById("cmbFilial").selectedIndex === 0) {
+            statusValidacaoOK = false;
+
+            alert("Filial não selecionada!");
+
+        } else if (lengthValor <= 0) {
+            statusValidacaoOK = false;
+
+            alert("Valor não informado!");
+
+        }else if ((lengthPlaca < 7) || (lengthPlaca === 0)) {
+
+            statusValidacaoOK = false;
+            alert("Placa inválida!");
+
+        }       
+
+        console.log("Status da Validação do Cadastro: " + statusValidacaoOK);
+
+        if (statusValidacaoOK) {
+
+            console.log("Acionou o Cadastramento");
+
+            props.cadastrarVeiculo();
+
+            //Apresentar mensagem na tela de cadastramento ok e não ok
+            if (props.Success === 1) {
+
+                alert("Cadastro Realizado com Sucesso!");
+   
+            } else if (props.Success === 2) {
+
+                alert("Erro ao incluir o Veículo!");
+
+            };
+
+        }
+
+    }
+
+
+
 
     //função para limpar os campos quando o botão <Limpar> for acionado
     const limparCampos = () => {
@@ -92,7 +187,7 @@ const CadastroView = (props) => {
 
                     <Form.Group controlId="formGridRenavam" className="col-md-4 mb-3" name="formGridRenavam">
                         <Form.Label>Renavam</Form.Label>
-                        <Form.Control id="txtRenavam" type="number" onChange={props.onSelectRenavam}>
+                        <Form.Control id="txtRenavam" type="number" maxLength="9" onChange={props.onSelectRenavam}>
                         </Form.Control>
                     </Form.Group>
 
@@ -108,13 +203,13 @@ const CadastroView = (props) => {
 
                     <Form.Group controlId="formGridKilometragem" className="col-md-4 mb-3" name="formGridKilometragem">
                         <Form.Label>Kilometragem</Form.Label>
-                        <Form.Control id="txtKM" type="number" onChange={props.onSelectKm}>
+                        <Form.Control id="txtKM" type="number" max="999999" onChange={props.onSelectKm}>
                         </Form.Control>
                     </Form.Group>
 
                     <Form.Group controlId="formGridPlaca" className="col-md-4 mb-3" name="formGridPlaca">
                         <Form.Label>Placa</Form.Label>
-                        <Form.Control id="txtPlaca" type="text" maxLength="8" onChange={props.onSelectPlaca}>
+                        <Form.Control id="txtPlaca" type="text" maxLength="7" onChange={props.onSelectPlaca}>
                         </Form.Control>
                     </Form.Group>
 
@@ -130,7 +225,7 @@ const CadastroView = (props) => {
 
                     <Form.Group controlId="formGridValor" className="col-md-4 mb-3" name="formGridValor">
                         <Form.Label>Valor</Form.Label>
-                        <Form.Control id="txtValor" type="number" onChange={props.onSelectValor}>
+                        <Form.Control id="txtValor" type="text" onBlur={formataValor} onChange={props.onSelectValor}>
                         </Form.Control>
                     </Form.Group>
 
@@ -148,26 +243,11 @@ const CadastroView = (props) => {
             <div className="row">
                 <div className="d-flex justify-content-center mb-5">
                     <Button Class='secundary' ClickFunction={limparCampos} Text='Limpar' ></Button>
-                    <Button Class='primary' ClickFunction={props.cadastrarVeiculo} Text='Salvar' data-toggle="modal" data-target="#modalCadastro"></Button>
+                    <Button Class='primary' ClickFunction={validaCadastro} Text='Salvar'></Button>
                 </div>
             </div>
 
-            <div class="modal fade" id="modalCadastro">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                            <h4 class="modal-title">''</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>{infoMessage}</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </section>
     );
 }
